@@ -1,0 +1,13 @@
+rtl/extend.sv
+rtl/alu.sv
+rtl/regfile.sv
+rtl/aludec.sv
+rtl/maindec.sv
+rtl/controller.sv
+rtl/datapath.sv
+rtl/riscvsingle.sv
+rtl/imem.sv
+rtl/dmem.sv
+rtl/genius_periph.sv
+rtl/genius_soc.sv
+sim/genius_tb.sv

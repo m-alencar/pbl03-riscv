@@ -55,15 +55,63 @@ O núcleo é o módulo `riscvsingle` (controller + datapath), sem memórias dent
 - `rtl/` — código-fonte em SystemVerilog (`riscvsingle`, `controller`, `datapath`, `alu`, `regfile`, `extend`, `maindec`, `aludec`, `imem`, `dmem`, `riscv_single_top`). `genius_soc` e `genius_periph` são do SoC de teste do jogo Genius (não fazem parte do núcleo).
 - `sim/` — teste de sanidade (`testbench.sv`), programa de teste (`program.hex`, gerado por `encode.py`) e testbench do Genius (`genius_tb.sv`).
 - `genius/` — programa Genius (PBL02) em assembly e os `.hex` prontos (`genius.hex` = instruções, `data.hex` = dados).
+- `srclist/` — listas de arquivos prontas para o template (`testbench.srclist`, `genius_tb.srclist`).
 - `doc/` — relatório e documento de arquitetura.
 
-## Como rodar os testes de referência
+## Como rodar os testes (passo a passo)
 
-Ambiente de origem: Windows + Git Bash + Vivado 2024.1, com o `verif-env-template` (https://github.com/nelsonafn/verif-env-template). Coloque `rtl/` e os testbenches nas pastas correspondentes do template e use uma `srclist` com os arquivos de `rtl/`.
+Ambiente de origem: Windows + Git Bash + Vivado 2024.1 (instalado em `C:\Xilinx\Vivado\2024.1`), com o `verif-env-template` (https://github.com/nelsonafn/verif-env-template). Digite ou cole **uma linha por vez** no Git Bash: colar várias de uma vez pode inserir caracteres extras.
 
-**Teste de sanidade** (`program.hex`): ao chegar no `ecall`, deve imprimir `a0 = 3`, `x28 = 15`, `x30 = 65`, `x12 = 0x34` e terminar em 205 ns. O `program.hex` precisa estar na pasta em que o `xsim` roda.
+**1. Baixar este repositório** (em uma pasta qualquer):
 
-**Genius** (`genius_tb`, com `genius.hex` e `data.hex` na pasta do `xsim`): resultado esperado `RESULTADO: 5 cenarios passaram, 0 falharam`.
+```
+git clone https://github.com/m-alencar/pbl03-riscv.git
+```
+
+**2. Copiar para dentro do template.** Abra a pasta do `verif-env-template` e copie para a raiz dele as pastas `rtl`, `sim`, `genius` e `srclist` deste repositório. (Se o template já tiver uma pasta `rtl` ou `srclist`, copie só o conteúdo, sem apagar o que existe.)
+
+**3. Entrar na pasta do template e carregar o ambiente:**
+
+```
+cd /caminho/do/verif-env-template
+source setup_env.sh
+```
+
+**4. Teste de sanidade (22 instruções):**
+
+```
+rm -rf build
+cmake -S . -B build -G "Unix Makefiles" -DTOP_NAME=testbench -DTEST_NAME=sanity -DSEED=1 -DVIVADO_PARMS="--R"
+cp sim/program.hex build/
+make SHELL="$(which bash)" compile
+make SHELL="$(which bash)" sim
+cd build
+cmd //c "xsim top_sim -R"
+```
+
+Resultado esperado: ao chegar no `ecall`, o teste imprime `a0 = 3`, `x28 = 15`, `x30 = 65`, `x12 = 0x34` e termina em 205 ns.
+
+**5. Genius no processador (5 cenários).** Volte à raiz do template (`cd ..`) e rode:
+
+```
+rm -rf build
+cmake -S . -B build -G "Unix Makefiles" -DTOP_NAME=genius_tb -DTEST_NAME=sanity -DSEED=1 -DVIVADO_PARMS="--R"
+cp genius/genius.hex genius/data.hex build/
+make SHELL="$(which bash)" compile
+make SHELL="$(which bash)" sim
+cd build
+cmd //c "xsim top_sim -R"
+```
+
+Resultado esperado: `RESULTADO: 5 cenarios passaram, 0 falharam`.
+
+**6. Ver as ondas (opcional).** Troque o último comando por `cmd //c "xsim top_sim -gui"`. O terminal fica ocupado enquanto a janela estiver aberta; use outro Git Bash para novos comandos.
+
+**Problemas comuns**
+
+- `Unsupported architecture: i686-pc` no fim do `make sim`: pode ser ignorado. A elaboração já terminou; o `xsim` é chamado à parte pelo passo seguinte.
+- `$readmemh` avisando que não achou `program.hex`, `genius.hex` ou `data.hex`: o arquivo `.hex` precisa estar na pasta `build/`, que é de onde o `xsim` roda (é o `cp` dos passos 4 e 5).
+- Seus próprios testbenches: o processador é o módulo `riscvsingle` (ou `riscv_single_top`, que já traz as memórias). A interface está descrita no início deste README. Use uma `srclist` com os arquivos de `rtl/`, sem `genius_soc.sv` e `genius_periph.sv`, que são só do jogo.
 
 ## Resultados já obtidos (simulação, Vivado xsim 2024.1)
 
@@ -75,4 +123,4 @@ Esses testes não substituem a verificação em UVM: cobrem as classes de instru
 
 ## Contato
 
-Dúvidas sobre o projeto: Marina de Oliveira Alencar - marinaadmeng@gmail.com
+Dúvidas sobre o projeto: Marina de Oliveira Alencar — marinaadmeng@gmail.com
