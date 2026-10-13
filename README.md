@@ -75,4 +75,4 @@ Esses testes não substituem a verificação em UVM: cobrem as classes de instru
 
 ## Contato
 
-Dúvidas sobre o projeto: Marina de Oliveira Alencar.
+Dúvidas sobre o projeto: Marina de Oliveira Alencar - marinaadmeng@gmail.com
