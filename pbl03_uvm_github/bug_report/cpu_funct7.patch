@@ -1,0 +1,11 @@
+--- a/rtl/cpu/cpu.sv
++++ b/rtl/cpu/cpu.sv
+@@ -65,7 +65,7 @@
+ 
+     assign opcode   = instr[6:0];
+     assign funct3   = instr[14:12];
+-    assign funct7_5 = instr[30];
++    assign funct7_5 = |instr[31:25];  // any funct7 != 0 (sub, srai, mul...) is rejected
+     assign rd       = instr[11:7];
+     assign rs1      = instr[19:15];
+     assign rs2      = instr[24:20];

@@ -1,0 +1,9 @@
+srclist/riscv_dut.srclist
++incdir+tb/env/agents/riscv_agent
+srclist/riscv_interface.srclist
+tb/env/agents/riscv_agent/riscv_agent_pkg.sv
+tb/env/ref_model/riscv_ref_model_pkg.sv
+tb/env/top/riscv_env_pkg.sv
+tb/tests/sequence_lib/riscv_seq_list_pkg.sv
+tb/tests/riscv_test_list_pkg.sv
+tb/riscv_tb_top.sv

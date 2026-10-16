@@ -1,0 +1,9 @@
+../pbl03_colega/rtl/cpu/cpu_pkg.sv
+../pbl03_colega/rtl/cpu/pc.sv
+../pbl03_colega/rtl/cpu/imem.sv
+../pbl03_colega/rtl/cpu/regfile.sv
+../pbl03_colega/rtl/cpu/alu.sv
+../pbl03_colega/rtl/cpu/dmem.sv
+../pbl03_colega/rtl/cpu/io.sv
+../pbl03_colega/rtl/cpu/control.sv
+../pbl03_colega/rtl/cpu/cpu.sv

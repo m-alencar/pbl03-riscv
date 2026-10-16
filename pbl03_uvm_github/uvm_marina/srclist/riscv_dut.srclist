@@ -1,0 +1,8 @@
+rtl/alu.sv
+rtl/aludec.sv
+rtl/maindec.sv
+rtl/controller.sv
+rtl/extend.sv
+rtl/regfile.sv
+rtl/datapath.sv
+rtl/riscvsingle.sv
