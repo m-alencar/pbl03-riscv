@@ -40,10 +40,9 @@ cmd //c 'xsim top_sim -R -testplusarg "UVM_TESTNAME=riscv_illegal_test"'
 | `riscv_random_test` (5 sementes × 200) | 1000 | 138347 | PASSED (cobertura 100,00%) |
 | `riscv_illegal_test` | 15 | 950 | FAILED: `mul` executado como `add` |
 
-Detalhes do defeito em `bug_report/RELATO_mul_executado_como_add.md`.
+Com o patch `bug_report/cpu_funct7.patch` aplicado ao RTL do colega, o `riscv_illegal_test` passa a PASSED (15 programas, 0 erros). Detalhes do defeito em `bug_report/RELATO_mul_executado_como_add.md`.
 
 ## Limitações
 
 - O ISS foi escrito por esta equipe; um erro de interpretação pode estar nos dois lados.
-- A confirmação do defeito por mutação foi feita em Icarus Verilog; falta repetir no xsim com o UVM.
 - Chaves e botões do processador do colega ficam em zero; essa parte não é exercitada.

@@ -52,7 +52,7 @@ Em `rtl/cpu/cpu.sv`, rejeitar qualquer `funct7` não nulo (arquivo `cpu_funct7.p
 
 ## Confirmação
 
-Com a correção, em simulação com Icarus Verilog e o mesmo modelo de referência: o `mul` e o `div` passam a ser ignorados (x3 e x4 ficam em 0) e 60 programas aleatórios válidos continuam sem divergência. **Ainda não foi repetido no xsim com o UVM**; o passo é aplicar o patch, recompilar e rodar `riscv_illegal_test` (esperado: PASSED).
+Com o patch aplicado ao RTL do colega, o `riscv_illegal_test` no xsim 2024.1 passou de FAILED (1 erro, `mul`) para **PASSED**: 15 programas, 0 falhos, 975 ciclos comparados, 0 erros. Em Icarus Verilog, com o mesmo modelo de referência, o `mul` e o `div` passam a ser ignorados (x3 e x4 ficam em 0) e 60 programas aleatórios válidos continuam sem divergência.
 
 ## O que passou
 
